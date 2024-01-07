@@ -13,16 +13,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.19.x'
+          
+      - name: Get tag
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
       - run: npm install
       - run: npm run build
-      - run: mv dist release_${{github.ref_name}}
-      - run: zip -r release_${{github.ref_name}}.zip release_${{github.ref_name}}
+      - run: mv dist release_${{ steps.vars.outputs.tag }}
+      - run: zip -r release_${{ steps.vars.outputs.tag }}.zip release_${{ steps.vars.outputs.tag }}
       
       - name: Publish
         uses: ncipollo/release-action@v1
         with:
           tag: v1.0
-          artifacts: "release_${{github.ref_name}}.zip"
+          artifacts: "/release_${{ steps.vars.outputs.tag }}.zip"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
