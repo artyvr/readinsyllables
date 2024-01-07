@@ -13,13 +13,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.19.x'
+
       - run: npm install
       - run: npm run build
-      
-      - name: Rename dist dir
-        run: mv dist release_${{github.ref_name}}
-  
-      - name: Create zip
+      - run: mv dist release_${{github.ref_name}}
       - run: zip -r release_${{github.ref_name}}.zip release_${{github.ref_name}}
       
       - name: Publish
