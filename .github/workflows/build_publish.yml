@@ -1,4 +1,4 @@
-name: Build
+name: Build Publish Deploy
 on:
   push:
     tags: 
@@ -18,9 +18,15 @@ jobs:
       - run: mv dist release_${{ github.ref_name }}
       - run: zip -r release_${{ github.ref_name }}.zip release_${{ github.ref_name }}
       
-      - name: Publish
+      - name: Publish release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "release_${{ github.ref_name }}.zip"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to gh pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./release_${{ github.ref_name }}

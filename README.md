@@ -8,4 +8,4 @@
 
 Рабочий пример
 
-https://artyvr.github.io/ris/
+https://artyvr.github.io/readinsyllables/

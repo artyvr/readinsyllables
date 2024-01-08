@@ -11,6 +11,6 @@ module.exports = defineConfig({
     appleMobileWebAppStatusBarStyle: 'black',
   },
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/ris/'
+    ? '/readinsyllables/'
     : '/'
 })
